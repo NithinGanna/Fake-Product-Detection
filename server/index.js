@@ -131,3 +131,4 @@ app.get('/api/logout', verifyToken, (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+

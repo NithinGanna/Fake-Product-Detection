@@ -1,7 +1,9 @@
 'use client'
 
 import React from 'react'
-import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react'
+import { Menu, X, ChevronDown, ChevronRight, LogOut } from 'lucide-react'
+import Logout from './Logout'
+import { Link } from 'react-router-dom'
 
 const menuItems = [
   {
@@ -27,7 +29,7 @@ export function PostNavBar() {
 
   return (
     <div className="relative w-full bg-white">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-8xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
         <div className="inline-flex items-center space-x-2">
           <span>
             <svg
@@ -43,7 +45,11 @@ export function PostNavBar() {
               />
             </svg>
           </span>
-          <span className="font-bold">DevUI</span>
+          <span className="font-bold">
+            <Link to='/manufacturer'>
+                Hackathon
+            </Link>
+            </span>
         </div>
         <div className="hidden lg:block">
           <ul className="ml-12 inline-flex space-x-8">
@@ -70,14 +76,15 @@ export function PostNavBar() {
           ></input>
         </div>
         <div className="ml-2 mt-2 hidden lg:block">
-          <span className="relative inline-block">
+          {/* <span className="relative inline-block">
             <img
               className="h-10 w-10 rounded-full"
               src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
               alt="Dan_Abromov"
             />
             <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-600 ring-2 ring-white"></span>
-          </span>
+          </span> */}
+          <Logout/>
         </div>
         <div className="ml-2 lg:hidden">
           <Menu onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />
@@ -102,7 +109,7 @@ export function PostNavBar() {
                         />
                       </svg>
                     </span>
-                    <span className="font-bold">DevUI</span>
+                    <span className="font-bold">Hackathon</span>
                   </div>
                   <div className="-mr-2">
                     <button
@@ -134,7 +141,7 @@ export function PostNavBar() {
                   </nav>
                 </div>
                 <div className="ml-3 mt-4 flex items-center space-x-2">
-                  <img
+                  {/* <img
                     className="inline-block h-10 w-10 rounded-full"
                     src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
                     alt="Dan_Abromov"
@@ -142,7 +149,8 @@ export function PostNavBar() {
                   <span className="flex flex-col">
                     <span className="text-sm font-medium text-gray-900">Dan Abromov</span>
                     <span className="text-sm font-medium text-gray-500">@dan_abromov</span>
-                  </span>
+                  </span> */}
+                  <Logout/>
                 </div>
               </div>
             </div>
