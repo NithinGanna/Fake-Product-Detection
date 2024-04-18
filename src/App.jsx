@@ -7,6 +7,8 @@ import { Register } from './Components/Register';
 import { PostNavBar } from './Components/PostNavBar';
 import AddProduct from './Components/AddProduct';
 import RetrieveProduct from './Components/RetrieveProduct';
+import { CustomerLogin } from './CustomerComponents/CustomerLogin';
+import { CustomerRegister } from './CustomerComponents/CustomerRegister';
 
 function App() {
 
@@ -20,6 +22,8 @@ function App() {
           <Route path='/manufacturer' element={<PostNavBar/>} />
           <Route path='/add-product' element={ <AddProduct/> } />
           <Route path='/retrieve-product' element={ <RetrieveProduct/>} />
+          <Route path='/customer-login' element={ <CustomerLogin/>}/>
+          <Route path='/customer-register' element={ <CustomerRegister/>}/>
         </Routes>
       </Router>
     </>
