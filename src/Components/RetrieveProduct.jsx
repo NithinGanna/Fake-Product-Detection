@@ -1,20 +1,27 @@
 import React, { useState } from 'react';
 import Web3 from 'web3';
 import { PostNavBar } from './PostNavBar';
+import CryptoJS from 'crypto-js';
 
 const RetrieveProduct = () => {
   const [productId, setProductId] = useState('');
+  const [brand, setBrand] = useState('');
   const [retrievedProduct, setRetrievedProduct] = useState(null);
 
   // Connect to Ethereum provider
   const web3 = new Web3(Web3.givenProvider || 'http://localhost:7545');
 
   // Instantiate your contract
-  const contractAddress = '0xa9453140a03CBC7487db576b94d14bC6901E8139'; // Replace with your contract address
+  const contractAddress = '0x88833085C012BfFedAb30b0C3A3A99720706e815'; // Replace with your contract address
   const contractABI = [
 	{
 		"constant": false,
 		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
 			{
 				"internalType": "string",
 				"name": "_category",
@@ -44,9 +51,173 @@ const RetrieveProduct = () => {
 				"internalType": "uint256",
 				"name": "_price",
 				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_expiryDate",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_salt",
+				"type": "string"
 			}
 		],
-		"name": "addProduct",
+		"name": "addProductWithExpiry",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_category",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_brand",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_productId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_manufactureDate",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_batchNumber",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_price",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_salt",
+				"type": "string"
+			}
+		],
+		"name": "addProductWithoutExpiry",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "productId",
+				"type": "uint256"
+			}
+		],
+		"name": "ProductAdded",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "productId",
+				"type": "uint256"
+			}
+		],
+		"name": "ProductRemoved",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "productId",
+				"type": "uint256"
+			}
+		],
+		"name": "ProductUpdated",
+		"type": "event"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_productId",
+				"type": "uint256"
+			}
+		],
+		"name": "removeProduct",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_productId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_category",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_brand",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_manufactureDate",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_batchNumber",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_price",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_expiryDate",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_salt",
+				"type": "string"
+			}
+		],
+		"name": "updateProduct",
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
@@ -56,9 +227,9 @@ const RetrieveProduct = () => {
 		"constant": true,
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "_productId",
-				"type": "uint256"
+				"internalType": "string",
+				"name": "_saltValue",
+				"type": "string"
 			}
 		],
 		"name": "getProduct",
@@ -72,6 +243,67 @@ const RetrieveProduct = () => {
 				"internalType": "string",
 				"name": "",
 				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_saltValue",
+				"type": "string"
+			}
+		],
+		"name": "getProductBySalt",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			},
 			{
 				"internalType": "uint256",
@@ -113,6 +345,48 @@ const RetrieveProduct = () => {
 		"inputs": [
 			{
 				"internalType": "uint256",
+				"name": "_productId",
+				"type": "uint256"
+			}
+		],
+		"name": "productExists",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"name": "productIndex",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
 			}
@@ -123,6 +397,11 @@ const RetrieveProduct = () => {
 				"internalType": "uint256",
 				"name": "productId",
 				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
 			},
 			{
 				"internalType": "string",
@@ -148,6 +427,21 @@ const RetrieveProduct = () => {
 				"internalType": "uint256",
 				"name": "price",
 				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "expiryDate",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "exists",
+				"type": "bool"
+			},
+			{
+				"internalType": "string",
+				"name": "saltValue",
+				"type": "string"
 			}
 		],
 		"payable": false,
@@ -160,8 +454,13 @@ const RetrieveProduct = () => {
   // Function to retrieve product from blockchain
   const getProductFromBlockchain = async () => {
     try {
-      // Call the getProduct function in your contract
-      const productData = await contract.methods.getProduct(productId).call();
+      // Call the getProduct function in your contract with brand and productId
+	  const salt = productId + '-' + brand ;
+
+	  // Hash the salt value
+	  const hashedSalt = CryptoJS.SHA256(salt).toString();
+
+      const productData = await contract.methods.getProductBySalt(hashedSalt).call();
       setRetrievedProduct({
         category: productData[0],
         brand: productData[1],
@@ -199,6 +498,16 @@ const RetrieveProduct = () => {
                 onChange={(e) => setProductId(e.target.value)}
               />
             </div>
+            <div>
+              <label htmlFor="brand" className="block mb-1">Brand:</label>
+              <input
+                type="text"
+                id="brand"
+                className="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500"
+                value={brand}
+                onChange={(e) => setBrand(e.target.value)}
+              />
+            </div>
             <button type="submit" className="block w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition-colors duration-300">Retrieve Product</button>
           </form>
           {retrievedProduct && (
@@ -218,4 +527,3 @@ const RetrieveProduct = () => {
 }
 
 export default RetrieveProduct;
-
