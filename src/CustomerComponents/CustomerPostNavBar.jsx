@@ -1,16 +1,17 @@
 'use client'
 
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react'
+import Logout from '../Components/Logout'
+import { Link } from 'react-router-dom'
 
 const menuItems = [
   {
     name: 'Home',
-    href: '/',
+    href: '/customer-home',
   },
   {
-    name: 'About',
+    name: 'about',
     href: '#',
   },
   {
@@ -19,7 +20,7 @@ const menuItems = [
   },
 ]
 
-export function PreNavBar() {
+export function CustomerPostNavBar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 
   const toggleMenu = () => {
@@ -29,7 +30,6 @@ export function PreNavBar() {
   return (
     <div className="relative w-full bg-white">
       <div className="mx-auto flex max-w-8xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
-      <Link to='/' >
         <div className="inline-flex items-center space-x-2">
           <span>
             <svg
@@ -45,10 +45,13 @@ export function PreNavBar() {
               />
             </svg>
           </span>
-          <span className="font-bold">Hackathon</span>
+          <span className="font-bold">
+            <Link to='/manufacturer'>
+                Hackathon
+            </Link>
+            </span>
         </div>
-        </Link>
-        <div className="hidden grow items-start lg:flex">
+        <div className="hidden lg:block">
           <ul className="ml-12 inline-flex space-x-8">
             {menuItems.map((item) => (
               <li key={item.name}>
@@ -65,21 +68,25 @@ export function PreNavBar() {
             ))}
           </ul>
         </div>
-        <div className="hidden space-x-2 lg:block">
-          <Link to='/register'
-            type="button"
-            className="rounded-md bg-transparent px-3 py-2 text-sm font-semibold text-black hover:bg-black/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-          >
-            Sign In
-          </Link>
-          <Link to='/login'
-            type="button"
-            className="rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-          >
-            Log In
-          </Link>
+        <div className="flex grow justify-end">
+          <input
+            className="flex h-10 w-[250px] rounded-md bg-gray-100 px-3 py-2 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+            type="text"
+            placeholder="Search"
+          ></input>
         </div>
-        <div className="lg:hidden">
+        <div className="ml-2 mt-2 hidden lg:block">
+          {/* <span className="relative inline-block">
+            <img
+              className="h-10 w-10 rounded-full"
+              src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
+              alt="Dan_Abromov"
+            />
+            <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-600 ring-2 ring-white"></span>
+          </span> */}
+          <Logout/>
+        </div>
+        <div className="ml-2 lg:hidden">
           <Menu onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />
         </div>
         {isMenuOpen && (
@@ -102,7 +109,7 @@ export function PreNavBar() {
                         />
                       </svg>
                     </span>
-                    <span className="font-bold">DevUI</span>
+                    <span className="font-bold">Hackathon</span>
                   </div>
                   <div className="-mr-2">
                     <button
@@ -133,19 +140,17 @@ export function PreNavBar() {
                     ))}
                   </nav>
                 </div>
-                <div className="mt-2 space-y-2">
-                <Link to='/register'
-                    type="button"
-                    className="w-full rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                  >
-                    Sign In
-                  </Link>
-                  <Link to='/login'
-                    type="button"
-                    className="w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                  >
-                    Log In
-                  </Link>
+                <div className="ml-3 mt-4 flex items-center space-x-2">
+                  {/* <img
+                    className="inline-block h-10 w-10 rounded-full"
+                    src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
+                    alt="Dan_Abromov"
+                  />
+                  <span className="flex flex-col">
+                    <span className="text-sm font-medium text-gray-900">Dan Abromov</span>
+                    <span className="text-sm font-medium text-gray-500">@dan_abromov</span>
+                  </span> */}
+                  <Logout/>
                 </div>
               </div>
             </div>

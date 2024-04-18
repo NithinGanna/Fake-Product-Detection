@@ -30,7 +30,16 @@ const userSchema = new mongoose.Schema({
   password: String,
 });
 
+// customer User schema
+const customerUserSchema = new mongoose.Schema({
+  email: { type: String, unique: true },
+  name: String,
+  password: String,
+});
+
 const User = mongoose.model('User', userSchema);
+
+const customerUser = mongoose.model('customerUser', userSchema);
 
 app.use(bodyParser.json());
 // Allow requests from specific origin
@@ -126,6 +135,68 @@ app.post('/api/login', async (req, res) => {
 app.get('/api/logout', verifyToken, (req, res) => {
   res.clearCookie('token'); // Clear JWT cookie
   res.json({ message: 'Logout successful' });
+});
+
+// customer end points
+
+// Customer Register endpoint
+app.post('/api/customerRegister', async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    // Check if email already exists
+    const existingUser = await customerUser.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: 'Email already exists' });
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a new user
+    const newUser = new customerUser({ name, email, password: hashedPassword });
+    await newUser.save();
+
+    // Generate JWT
+    const token = jwt.sign({ userId: newUser._id }, JWT_SECRET, { expiresIn: '1d' });
+
+    // Send JWT as a cookie
+    res.cookie('token', token, { httpOnly: true });
+
+    res.status(201).json({ message: 'User registered successfully' });
+  } catch (error) {
+    console.error('Registration error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Customer Login endpoint
+app.post('/api/customerLogin', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Find the user
+    const user = await customerUser.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    // Check if the password is correct
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    // Generate JWT
+    const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1d' });
+
+    // Send JWT as a cookie
+    res.cookie('token', token, { httpOnly: true });
+
+    res.json({ message: 'Login successful' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 app.listen(PORT, () => {

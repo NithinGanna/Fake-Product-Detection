@@ -13,19 +13,28 @@ export function Register() {
 
   const handleRegister = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/register', {
-        name,
-        email,
-        password
+      const response = await fetch('http://localhost:5000/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password
+        }),
+        credentials: 'include' // Equivalent to axios's {withCredentials:true}
       });
-
-      if (response.status === 201) {
+  
+      const responseData = await response.json();
+  
+      if (response.ok) {
         // Registration successful, redirect or show a success message
-        console.log(response.data.message);
+        console.log(responseData.message);
         navigate('/manufacturer');
       } else {
         // Registration failed, handle error
-        console.error(response.data.error);
+        console.error(responseData.error);
       }
     } catch (error) {
       console.error('Registration error:', error);

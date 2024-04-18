@@ -9,6 +9,7 @@ import AddProduct from './Components/AddProduct';
 import RetrieveProduct from './Components/RetrieveProduct';
 import { CustomerLogin } from './CustomerComponents/CustomerLogin';
 import { CustomerRegister } from './CustomerComponents/CustomerRegister';
+import CustomerHome from './CustomerPages/CustomerHome';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route path='/retrieve-product' element={ <RetrieveProduct/>} />
           <Route path='/customer-login' element={ <CustomerLogin/>}/>
           <Route path='/customer-register' element={ <CustomerRegister/>}/>
+          <Route path='/customer-home' element={<CustomerHome/>} />
         </Routes>
       </Router>
     </>
