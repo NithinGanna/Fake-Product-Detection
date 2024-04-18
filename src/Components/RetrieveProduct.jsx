@@ -10,7 +10,7 @@ const RetrieveProduct = () => {
   const web3 = new Web3(Web3.givenProvider || 'http://localhost:7545');
 
   // Instantiate your contract
-  const contractAddress = '0x45404ACB3321E51C544D9e0303228FA39ba9C15d'; // Replace with your contract address
+  const contractAddress = '0xa9453140a03CBC7487db576b94d14bC6901E8139'; // Replace with your contract address
   const contractABI = [
 	{
 		"constant": false,
@@ -181,6 +181,7 @@ const RetrieveProduct = () => {
     getProductFromBlockchain();
   };
 
+
   return (
     <>
       <PostNavBar />
@@ -217,3 +218,4 @@ const RetrieveProduct = () => {
 }
 
 export default RetrieveProduct;
+
