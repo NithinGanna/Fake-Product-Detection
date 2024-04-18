@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { PreNavBar } from './PreNavBar';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Import Axios
 
 export function Register() {
   const [name, setName] = useState('');
@@ -12,23 +13,19 @@ export function Register() {
 
   const handleRegister = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, email, password }),
+      const response = await axios.post('http://localhost:5000/api/register', {
+        name,
+        email,
+        password
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
+      if (response.status === 201) {
         // Registration successful, redirect or show a success message
-        console.log(data.message);
+        console.log(response.data.message);
         navigate('/manufacturer');
       } else {
         // Registration failed, handle error
-        console.error(data.error);
+        console.error(response.data.error);
       }
     } catch (error) {
       console.error('Registration error:', error);
