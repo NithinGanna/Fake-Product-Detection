@@ -25,7 +25,7 @@ function AddProductForm() {
   const web3 = new Web3(Web3.givenProvider || 'http://localhost:7545');
 
   // Instantiate your contract
-  const contractAddress = '0x88833085C012BfFedAb30b0C3A3A99720706e815'; // Replace with your contract address
+  const contractAddress = '0x5D719d78c1Ab55B00ba07f40D7EC19457493A3D9'; // Replace with your contract address
 
   const contractABI =  [
     {
@@ -537,7 +537,7 @@ function AddProductForm() {
     console.log(formData);
   
     // Concatenate productId and brand to form saltValue
-    const saltValue = formData.productId + '-' + formData.brand;
+    const saltValue = formData.productId + '-' + formData.brand + '-' + formData.name;
 
     // Hash the salt value
     const hashedSalt = CryptoJS.SHA256(saltValue).toString();

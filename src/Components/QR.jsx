@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Webcam from 'react-webcam';
 import jsQR from 'jsqr';
-import { CustomerPostNavBar } from '../CustomerComponents/CustomerPostNavBar';
 import Web3 from 'web3';
+import { PostNavBar } from './PostNavBar';
 
   
 
-const CustomerHome = () => {
+const QR = () => {
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [qrCodeData, setQrCodeData] = useState('');
   const [uploadedImage, setUploadedImage] = useState(null);
@@ -492,7 +492,7 @@ const CustomerHome = () => {
   };
 
   const handleBack = () => {
-    navigate('/customer-home');
+    navigate('/manufacturer');
   };
 
 
@@ -527,7 +527,7 @@ const CustomerHome = () => {
 
   return (
     <>
-      <CustomerPostNavBar />
+    <PostNavBar/>
       <div className="text-center">
         <h1 className="text-3xl font-bold mb-8">Verification Page</h1>
         {!isCameraActive ? (
@@ -578,7 +578,7 @@ const CustomerHome = () => {
             />
           </div>
         )}
-         {/* Inside CustomerHome component */}
+         {/* Inside QR component */}
          {products.length > 0 && (
             <div key={products[0]} className="border p-4 my-4">
                 <h3 className="text-lg font-semibold">{products[0]}</h3>
@@ -595,4 +595,4 @@ const CustomerHome = () => {
   );
 };
 
-export default CustomerHome;
+export default QR;

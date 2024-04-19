@@ -6,13 +6,14 @@ import CryptoJS from 'crypto-js';
 const RetrieveProduct = () => {
   const [productId, setProductId] = useState('');
   const [brand, setBrand] = useState('');
+  const [productName, setProductName] = useState('');
   const [retrievedProduct, setRetrievedProduct] = useState(null);
 
   // Connect to Ethereum provider
   const web3 = new Web3(Web3.givenProvider || 'http://localhost:7545');
 
   // Instantiate your contract
-  const contractAddress = '0x88833085C012BfFedAb30b0C3A3A99720706e815'; // Replace with your contract address
+  const contractAddress = '0x5D719d78c1Ab55B00ba07f40D7EC19457493A3D9'; // Replace with your contract address
   const contractABI = [
 	{
 		"constant": false,
@@ -455,10 +456,10 @@ const RetrieveProduct = () => {
   const getProductFromBlockchain = async () => {
     try {
       // Call the getProduct function in your contract with brand and productId
-	  const salt = productId + '-' + brand ;
+      const salt = productId + '-' + brand + '-' + productName;
 
-	  // Hash the salt value
-	  const hashedSalt = CryptoJS.SHA256(salt).toString();
+      // Hash the salt value
+      const hashedSalt = CryptoJS.SHA256(salt).toString();
 
       const productData = await contract.methods.getProductBySalt(hashedSalt).call();
       setRetrievedProduct({
@@ -479,7 +480,6 @@ const RetrieveProduct = () => {
     e.preventDefault();
     getProductFromBlockchain();
   };
-
 
   return (
     <>
@@ -506,6 +506,16 @@ const RetrieveProduct = () => {
                 className="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500"
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor="productName" className="block mb-1">Product Name:</label>
+              <input
+                type="text"
+                id="productName"
+                className="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500"
+                value={productName}
+                onChange={(e) => setProductName(e.target.value)}
               />
             </div>
             <button type="submit" className="block w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition-colors duration-300">Retrieve Product</button>

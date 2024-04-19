@@ -15,8 +15,8 @@ const menuItems = [
     href: '/retrieve-product',
   },
   {
-    name: 'Contact',
-    href: '#',
+    name: 'QR',
+    href: '/qr',
   },
 ]
 

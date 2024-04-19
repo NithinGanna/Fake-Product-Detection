@@ -5,6 +5,7 @@ const Manufacturer = () => {
   return (
     <div>
         <PostNavBar/>
+        <h1>go via navbar</h1>
     </div>
   )
 }
