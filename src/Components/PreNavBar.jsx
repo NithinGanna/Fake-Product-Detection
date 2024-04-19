@@ -27,7 +27,7 @@ export function PreNavBar() {
   }
 
   return (
-    <div className="relative w-full bg-white">
+    <div className="relative w-full bg-transparent">
       <div className="mx-auto flex max-w-8xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
       <Link to='/' >
         <div className="inline-flex items-center space-x-2">

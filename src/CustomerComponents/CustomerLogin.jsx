@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { PreNavBar } from '../Components/PreNavBar';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer,toast,Slide } from 'react-toastify';
+import CustomerParticleBg from './CustomerParticleBg';
 
 export function CustomerLogin() {
   const [email, setEmail] = useState('');
@@ -38,19 +40,54 @@ export function CustomerLogin() {
       if (response.ok) {
         // Login successful, redirect or perform necessary actions
         console.log(data.message);
+        toast.success(data.message, {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+          transition: Slide,
+        });
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         navigate('/customer-home');
       } else {
         // Login failed, display error message
         setError(data.error);
+        toast.warn(data.error, {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+          transition: Slide,
+        });
       }
     } catch (error) {
       console.error('Login error:', error);
+      toast.error('An error occurred while logging in.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Slide,
+      });
       setError('An error occurred. Please try again later.');
     }
   };
 
   return (
     <>
+    <CustomerParticleBg/>
       <PreNavBar />
       <section>
         <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
@@ -172,6 +209,7 @@ export function CustomerLogin() {
           </div>
         </div>
       </section>
+      <ToastContainer/>
     </>
   );
 }

@@ -4,6 +4,7 @@ import Web3 from 'web3';
 import QRCode from 'react-qr-code';
 import CryptoJS from 'crypto-js';
 import { FaDownload } from 'react-icons/fa';
+import { ToastContainer,toast,Slide } from 'react-toastify';
 
 
 function AddProductForm() {
@@ -502,6 +503,17 @@ function AddProductForm() {
   
       // Handle success
       console.log('Product added successfully to the blockchain.');
+      toast.success('Product added successfully to the blockchain.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Slide,
+      });
       setShowQRCode(true); // Show QR code after successful submission
       // Reset the form data after success
       setFormData({
@@ -518,6 +530,17 @@ function AddProductForm() {
     } catch (error) {
       // Handle error
       console.error('Error adding product to the blockchain:', error);
+      toast.error('An Error occured while adding product to the blockchain.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Slide,
+      });
     }
   }
   
@@ -728,6 +751,7 @@ function AddProductForm() {
           )}
         </div>
       </section>
+      <ToastContainer/>
     </>
   );
 }

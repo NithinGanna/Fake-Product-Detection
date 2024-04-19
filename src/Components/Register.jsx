@@ -3,6 +3,8 @@ import { ArrowRight } from 'lucide-react';
 import { PreNavBar } from './PreNavBar';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; // Import Axios
+import { ToastContainer,toast,Slide } from 'react-toastify';
+import ParticleBg from './ParticleBg';
 
 export function Register() {
   const [name, setName] = useState('');
@@ -31,18 +33,53 @@ export function Register() {
       if (response.ok) {
         // Registration successful, redirect or show a success message
         console.log(responseData.message);
+        toast.success(responseData.message, {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+          transition: Slide,
+        });
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         navigate('/manufacturer');
       } else {
         // Registration failed, handle error
         console.error(responseData.error);
+        toast.warn(responseData.error, {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+          transition: Slide,
+        }); 
       }
     } catch (error) {
       console.error('Registration error:', error);
+      toast.error('An error occurred while logging in.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Slide,
+      });
     }
   };
 
   return (
     <>
+      <ParticleBg/>
       <PreNavBar />
       <section>
         <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -162,15 +199,9 @@ export function Register() {
               </div>
             </div>
           </div>
-          <div className="h-full w-full">
-            <img
-              className="mx-auto h-full w-full rounded-md object-cover"
-              src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1742&q=80"
-              alt=""
-            />
-          </div>
         </div>
       </section>
+      <ToastContainer/>
     </>
   );
 }
