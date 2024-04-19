@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Web3 from 'web3';
 import { PostNavBar } from './PostNavBar';
 import CryptoJS from 'crypto-js';
+import { ToastContainer,toast,Slide } from 'react-toastify';
 
 const RetrieveProduct = () => {
   const [productId, setProductId] = useState('');
@@ -471,7 +472,17 @@ const RetrieveProduct = () => {
       });
     } catch (error) {
       console.error('Error retrieving product:', error);
-      alert('Error retrieving product. Please try again.');
+      toast.error('An error occurred while logging in.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Slide,
+      });
     }
   };
 
@@ -532,6 +543,7 @@ const RetrieveProduct = () => {
           )}
         </div>
       </div>
+	  <ToastContainer/>
     </>
   );
 }

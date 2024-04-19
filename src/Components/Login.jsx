@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { PreNavBar } from './PreNavBar';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast,Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ParticleBg from './ParticleBg';
 
 export function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
@@ -25,18 +27,53 @@ export function Login() {
       if (response.ok) {
         // Login successful, redirect or show a success message
         console.log(data.message);
+        toast.success(data.message, {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+          transition: Slide,
+        });
+        await new Promise((resolve) => setTimeout(resolve, 2000)); // Show success toast
         navigate('/manufacturer');
       } else {
         // Login failed, handle error
         console.error(data.error);
+        toast.warn(data.error, {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+          transition: Slide,
+        }); // Show error toast
       }
     } catch (error) {
       console.error('Login error:', error);
+      toast.error('An error occurred while logging in.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Slide,
+      });// Show error toast
     }
   };
 
   return (
     <>
+      <ParticleBg/>
       <PreNavBar />
       <section>
         <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -147,15 +184,9 @@ export function Login() {
               </div>
             </div>
           </div>
-          <div className="h-full w-full">
-            <img
-              className="mx-auto h-full w-full rounded-md object-cover"
-              src="https://images.unsplash.com/photo-1630673245362-f69d2b93880e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
-              alt=""
-            />
-          </div>
         </div>
       </section>
+      <ToastContainer /> {/* Add this line to render the toast container */}
     </>
   );
 }

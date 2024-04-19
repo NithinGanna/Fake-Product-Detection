@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { PreNavBar } from '../Components/PreNavBar';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer,toast,Slide } from 'react-toastify';
+import CustomerParticleBg from './CustomerParticleBg';
 
 export function CustomerRegister() {
   const [fullName, setFullName] = useState('');
@@ -43,14 +45,48 @@ export function CustomerRegister() {
       if (response.ok) {
         // Registration successful, handle success
         console.log('Registration successful:', data);
+        toast.success(data.message, {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+          transition: Slide,
+        });
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         navigate('/customer-home');
       } else {
         // Registration failed, display error message
         setError(data.error || 'Registration failed');
+        toast.warn(data.error, {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+          transition: Slide,
+        }); 
       }
     } catch (error) {
       console.error('Error:', error);
       setError('An unexpected error occurred. Please try again later.');
+      toast.error('An error occurred while logging in.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Slide,
+      });
     } finally {
       setLoading(false);
     }
@@ -58,6 +94,7 @@ export function CustomerRegister() {
 
   return (
     <>
+      <CustomerParticleBg/>
       <PreNavBar />
       <section>
         <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
@@ -195,6 +232,7 @@ export function CustomerRegister() {
           </div>
         </div>
       </section>
+      <ToastContainer/>
     </>
   );
 }
