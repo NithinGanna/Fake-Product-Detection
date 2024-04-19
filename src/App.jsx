@@ -13,6 +13,8 @@ import Analyse from './CustomerComponents/Analyse';
 import Summary from './CustomerComponents/Summary';
 import QR from './Components/QR';
 import Manufacturer from './Pages/Manufacturer';
+import ExpiryAlerts from './CustomerComponents/ExpiryAlerts';
+import LandingPage from './Pages/LandingPage';
 
 function App() {
 
@@ -20,7 +22,8 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path='/' element={<Home/>} />
+          <Route path='/' element={<LandingPage/>} />
+          <Route path='/home' element={<Home/>} />
           <Route path='/login' element={<Login/>} />
           <Route path='/register' element={<Register/>} />
           <Route path='/manufacturer' element={<Manufacturer/>} />
@@ -32,6 +35,7 @@ function App() {
           <Route path='/summary' element={<Summary/>} />
           <Route path='/analyse' element={ <Analyse/> } />
           <Route path='/qr' element={<QR/>} />
+          <Route path='/expiry' element={<ExpiryAlerts/>} />
         </Routes>
       </Router>
     </>

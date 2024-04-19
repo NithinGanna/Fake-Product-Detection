@@ -18,6 +18,10 @@ const menuItems = [
     name: 'Analyse',
     href: '/analyse',
   },
+  {
+    name: 'Expiry',
+    href: '/expiry',
+  },
 ]
 
 export function CustomerPostNavBar() {

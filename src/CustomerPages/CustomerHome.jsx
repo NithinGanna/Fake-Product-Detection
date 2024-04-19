@@ -5,13 +5,11 @@ import jsQR from 'jsqr';
 import { CustomerPostNavBar } from '../CustomerComponents/CustomerPostNavBar';
 import Web3 from 'web3';
 
-  
-
 const CustomerHome = () => {
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [qrCodeData, setQrCodeData] = useState('');
   const [uploadedImage, setUploadedImage] = useState(null);
-  const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState(null);
   const webcamRef = React.useRef(null);
   const navigate = useNavigate();
 
@@ -21,45 +19,6 @@ const CustomerHome = () => {
   // Instantiate your contract
   const contractAddress = '0x5D719d78c1Ab55B00ba07f40D7EC19457493A3D9'; // Replace with your contract address
   const contractABI = [
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "productId",
-				"type": "uint256"
-			}
-		],
-		"name": "ProductAdded",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "productId",
-				"type": "uint256"
-			}
-		],
-		"name": "ProductRemoved",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "productId",
-				"type": "uint256"
-			}
-		],
-		"name": "ProductUpdated",
-		"type": "event"
-	},
 	{
 		"constant": false,
 		"inputs": [
@@ -160,6 +119,110 @@ const CustomerHome = () => {
 			}
 		],
 		"name": "addProductWithoutExpiry",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "productId",
+				"type": "uint256"
+			}
+		],
+		"name": "ProductAdded",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "productId",
+				"type": "uint256"
+			}
+		],
+		"name": "ProductRemoved",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "productId",
+				"type": "uint256"
+			}
+		],
+		"name": "ProductUpdated",
+		"type": "event"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_productId",
+				"type": "uint256"
+			}
+		],
+		"name": "removeProduct",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_productId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_category",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_brand",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_manufactureDate",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_batchNumber",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_price",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_expiryDate",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_salt",
+				"type": "string"
+			}
+		],
+		"name": "updateProduct",
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
@@ -389,73 +452,8 @@ const CustomerHome = () => {
 		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_productId",
-				"type": "uint256"
-			}
-		],
-		"name": "removeProduct",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_productId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_category",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_brand",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_manufactureDate",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_batchNumber",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_price",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_expiryDate",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_salt",
-				"type": "string"
-			}
-		],
-		"name": "updateProduct",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
 	}
-]; // Replace with your contract ABI
+];
   const contract = new web3.eth.Contract(contractABI, contractAddress);
 
   // Function to retrieve product from blockchain
@@ -463,7 +461,7 @@ const CustomerHome = () => {
     try {
       const productData = await contract.methods.getProductBySalt(qrCodeData).call();
       console.log('Product data:', productData); // Log product data
-      setProducts(productData);
+      setProduct(productData);
     } catch (error) {
       console.error('Error retrieving product:', error);
       alert('Error retrieving product. Please try again.');
@@ -493,8 +491,8 @@ const CustomerHome = () => {
 
   const handleBack = () => {
     navigate('/customer-home');
+	window.location.reload();
   };
-
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -525,14 +523,19 @@ const CustomerHome = () => {
     img.src = imageSrc;
   };
 
+  const formatDate = (timestamp) => {
+    const date = new Date(parseInt(timestamp));
+    return date.toLocaleDateString(); // Customize date format as needed
+  };
+  
   return (
     <>
       <CustomerPostNavBar />
-      <div className="text-center">
-        <h1 className="text-3xl font-bold mb-8">Verification Page</h1>
+      <div className="container mx-auto mt-8">
+        <h1 className="text-3xl font-bold text-center mb-8">Verification Page</h1>
         {!isCameraActive ? (
-          <>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleVerifyClick}>
+          <div className="flex flex-col items-center">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4" onClick={handleVerifyClick}>
               Verify
             </button>
             <input
@@ -548,19 +551,18 @@ const CustomerHome = () => {
             >
               Upload Image
             </label>
-          </>
+          </div>
         ) : (
-          <div>
+          <div className="flex flex-col items-center">
             <Webcam
               audio={false}
               screenshotFormat="image/jpeg"
               width={640}
               height={480}
               ref={webcamRef}
-              onUserMedia={() => console.log('User media is active')}
               className="mb-4"
             />
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleCapture}>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2" onClick={handleCapture}>
               Capture
             </button>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleBack}>
@@ -578,17 +580,18 @@ const CustomerHome = () => {
             />
           </div>
         )}
-         {/* Inside CustomerHome component */}
-         {products.length > 0 && (
-            <div key={products[0]} className="border p-4 my-4">
-                <h3 className="text-lg font-semibold">{products[0]}</h3>
-                <p>Category: {products[1]}</p>
-                <p>Brand: {products[2]}</p>
-                <p>Manufacture Date: {products[3]}</p>
-                <p>Batch Number: {products[4]}</p>
-                <p>Price: {products[5]}</p>
-                <p>Expiry Date: {products[6]}</p>
-            </div>
+        {/* Product details */}
+        {product && (
+          <div className="border p-4 my-4">
+            <h2 className="text-xl font-bold mb-4">Product Details</h2>
+            <p className="mb-2"><span className="font-semibold">Name:</span> {product[0]}</p>
+            <p className="mb-2"><span className="font-semibold">Category:</span> {product[1]}</p>
+            <p className="mb-2"><span className="font-semibold">Brand:</span> {product[2]}</p>
+            <p className="mb-2"><span className="font-semibold">Manufacture Date:</span> {formatDate(product[3])}</p>
+            <p className="mb-2"><span className="font-semibold">Batch Number:</span> {parseInt(product[4].toString())}</p>
+            <p className="mb-2"><span className="font-semibold">Price:</span> {parseInt(product[5].toString())}</p>
+            <p className="mb-2"><span className="font-semibold">Expiry Date:</span> {formatDate(product[6])}</p>
+          </div>
         )}
       </div>
     </>

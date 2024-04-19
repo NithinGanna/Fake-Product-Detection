@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Web3 from 'web3';
-import { PostNavBar } from './PostNavBar';
 import CryptoJS from 'crypto-js';
-import { ToastContainer,toast,Slide } from 'react-toastify';
+import { ToastContainer, toast, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { PostNavBar } from './PostNavBar';
 
 const RetrieveProduct = () => {
   const [productId, setProductId] = useState('');
@@ -10,11 +11,9 @@ const RetrieveProduct = () => {
   const [productName, setProductName] = useState('');
   const [retrievedProduct, setRetrievedProduct] = useState(null);
 
-  // Connect to Ethereum provider
   const web3 = new Web3(Web3.givenProvider || 'http://localhost:7545');
 
-  // Instantiate your contract
-  const contractAddress = '0x5D719d78c1Ab55B00ba07f40D7EC19457493A3D9'; // Replace with your contract address
+  const contractAddress = '0x5D719d78c1Ab55B00ba07f40D7EC19457493A3D9';
   const contractABI = [
 	{
 		"constant": false,
@@ -450,29 +449,27 @@ const RetrieveProduct = () => {
 		"stateMutability": "view",
 		"type": "function"
 	}
-]; // Replace with your contract ABI
+];
+
   const contract = new web3.eth.Contract(contractABI, contractAddress);
 
-  // Function to retrieve product from blockchain
   const getProductFromBlockchain = async () => {
     try {
-      // Call the getProduct function in your contract with brand and productId
       const salt = productId + '-' + brand + '-' + productName;
-
-      // Hash the salt value
       const hashedSalt = CryptoJS.SHA256(salt).toString();
-
       const productData = await contract.methods.getProductBySalt(hashedSalt).call();
       setRetrievedProduct({
-        category: productData[0],
-        brand: productData[1],
-        manufactureDate: productData[2].toString(), // Convert BigInt to string
-        batchNumber: parseInt(productData[3].toString()), // Convert BigInt to integer
-        price: parseInt(productData[4].toString()) // Convert BigInt to integer
+        name: productData[0],
+        category: productData[1],
+        brand: productData[2],
+        manufactureDate: productData[3].toString(),
+        batchNumber: parseInt(productData[4].toString()),
+        price: parseInt(productData[5].toString()),
+        expiryDate: productData[1] === 'FD' || productData[1] === 'MD' ? productData[6].toString() : null,
       });
     } catch (error) {
       console.error('Error retrieving product:', error);
-      toast.error('An error occurred while logging in.', {
+      toast.error('An error occurred while retrieving.', {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: false,
@@ -486,7 +483,6 @@ const RetrieveProduct = () => {
     }
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     getProductFromBlockchain();
@@ -494,7 +490,7 @@ const RetrieveProduct = () => {
 
   return (
     <>
-      <PostNavBar />
+	<PostNavBar/>
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-md mx-auto">
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -534,16 +530,20 @@ const RetrieveProduct = () => {
           {retrievedProduct && (
             <div className="mt-8">
               <h2 className="text-2xl font-bold mb-4">Retrieved Product Details</h2>
+              <p><strong>Name:</strong> {retrievedProduct.name}</p>
               <p><strong>Category:</strong> {retrievedProduct.category}</p>
               <p><strong>Brand:</strong> {retrievedProduct.brand}</p>
               <p><strong>Manufacture Date:</strong> {retrievedProduct.manufactureDate}</p>
               <p><strong>Batch Number:</strong> {retrievedProduct.batchNumber}</p>
               <p><strong>Price:</strong> {retrievedProduct.price}</p>
+              {retrievedProduct.expiryDate && (
+                <p><strong>Expiry Date:</strong> {retrievedProduct.expiryDate}</p>
+              )}
             </div>
           )}
         </div>
       </div>
-	  <ToastContainer/>
+      <ToastContainer />
     </>
   );
 }
