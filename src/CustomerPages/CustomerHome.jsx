@@ -494,6 +494,7 @@ const CustomerHome = () => {
   const handleBack = () => {
     navigate('/customer-home');
   };
+  
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];

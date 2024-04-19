@@ -10,6 +10,8 @@ import RetrieveProduct from './Components/RetrieveProduct';
 import { CustomerLogin } from './CustomerComponents/CustomerLogin';
 import { CustomerRegister } from './CustomerComponents/CustomerRegister';
 import CustomerHome from './CustomerPages/CustomerHome';
+import Analyse from './CustomerComponents/Analyse';
+import Summary from './CustomerComponents/Summary';
 
 function App() {
 
@@ -26,6 +28,8 @@ function App() {
           <Route path='/customer-login' element={ <CustomerLogin/>}/>
           <Route path='/customer-register' element={ <CustomerRegister/>}/>
           <Route path='/customer-home' element={<CustomerHome/>} />
+          <Route path='/summary' element={<Summary/>} />
+          <Route path='/analyse' element={ <Analyse/> } />
         </Routes>
       </Router>
     </>

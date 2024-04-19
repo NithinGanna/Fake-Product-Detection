@@ -21,7 +21,7 @@ function AddProductForm() {
 
   const [showQRCode, setShowQRCode] = useState(false);
 
-  // Connect to Ethereum provider
+  // Connect to Ethereum provider 
   const web3 = new Web3(Web3.givenProvider || 'http://localhost:7545');
 
   // Instantiate your contract

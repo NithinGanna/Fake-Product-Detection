@@ -34,6 +34,7 @@ export function CustomerLogin() {
         credentials: 'include',
       });
       const data = await response.json();
+      console.log(data);
       if (response.ok) {
         // Login successful, redirect or perform necessary actions
         console.log(data.message);

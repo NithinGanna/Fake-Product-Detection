@@ -11,12 +11,12 @@ const menuItems = [
     href: '/customer-home',
   },
   {
-    name: 'about',
-    href: '#',
+    name: 'Summary',
+    href: '/summary',
   },
   {
-    name: 'Contact',
-    href: '#',
+    name: 'Analyse',
+    href: '/analyse',
   },
 ]
 
@@ -46,7 +46,7 @@ export function CustomerPostNavBar() {
             </svg>
           </span>
           <span className="font-bold">
-            <Link to='/manufacturer'>
+            <Link to='/customer-home'>
                 Hackathon
             </Link>
             </span>
