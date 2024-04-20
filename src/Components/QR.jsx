@@ -4,6 +4,7 @@ import Webcam from 'react-webcam';
 import jsQR from 'jsqr';
 import Web3 from 'web3';
 import { PostNavBar } from './PostNavBar';
+import { ToastContainer,toast,Slide } from 'react-toastify';
 
 const QR = () => {
   const [isCameraActive, setIsCameraActive] = useState(false);
@@ -464,9 +465,45 @@ const QR = () => {
       setLoading(true); // Activate loading indicator
       const productData = await contract.methods.getProductBySalt(qrCodeData).call();
       setProduct(productData);
+	if(productData.length > 0){
+		toast.success('Product is verified.', {
+			position: 'top-center',
+			autoClose: 3000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: 'light',
+			transition: Slide,
+		});
+	}
+	else if(productData.length===0){
+		toast.warn('Product Not Verified.', {
+			position: 'top-center',
+			autoClose: 3000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: 'light',
+			transition: Slide,
+		});
+	}
     } catch (error) {
       console.error('Error retrieving product:', error);
-      alert('Error retrieving product. Please try again.');
+	toast.error('Error retrieving product. Please try again.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Slide,
+    });
     } finally {
       setLoading(false); // Deactivate loading indicator
     }
@@ -488,6 +525,17 @@ const QR = () => {
       decodeQRCode(imageSrc);
     } else {
       console.error('Failed to capture image');
+	toast.error('Failed to capture image. Please try again.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Slide,
+      });
     }
   };
 
@@ -521,6 +569,17 @@ const QR = () => {
         setQrCodeData(code.data);
       } else {
         console.log('No QR code found');
+		toast.warn('No QR code found', {
+			position: 'top-center',
+			autoClose: 3000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: 'light',
+			transition: Slide,
+		});
       }
     };
     img.src = imageSrc;
@@ -534,7 +593,7 @@ const QR = () => {
   return (
     <>
       <PostNavBar />
-      <div className="container mx-auto text-center">
+      <div className="container mx-auto text-center justify-center">
         <h1 className="text-3xl font-bold my-8">Verification Page</h1>
         {!isCameraActive ? (
           <>
@@ -560,6 +619,8 @@ const QR = () => {
           </>
         ) : (
           <div>
+			<div className="flex justify-center">
+			<div>
             <Webcam
               audio={false}
               screenshotFormat="image/jpeg"
@@ -567,8 +628,10 @@ const QR = () => {
               height={480}
               ref={webcamRef}
               onUserMedia={() => console.log('User media is active')}
-              className="mb-4 border border-gray-500"
+              className="mb-4 border border-gray-500 "
             />
+			</div>
+			</div>
             <button 
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               onClick={handleCapture}
@@ -607,6 +670,7 @@ const QR = () => {
             </div>
         )}
       </div>
+	<ToastContainer/>
     </>
   );
 };
