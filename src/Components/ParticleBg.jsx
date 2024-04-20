@@ -24,7 +24,7 @@ const ParticleBg = React.memo(() => {
           color: {
             value: "#ffffff"
           },
-          image: "url('https://www.justetf.com/images/thumbnails/etf-investment-guide-theme-blockchain.jpg')",
+          image: "url('https://imageio.forbes.com/specials-images/imageserve/62b9d358b54b5849577a1f0b/Abstract-blockchain-background/960x0.jpg?height=473&width=711&fit=bounds')",
           position: "50% 50%",
           repeat: "no-repeat",
           size: "cover",
