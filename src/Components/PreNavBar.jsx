@@ -7,7 +7,7 @@ import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react'
 const menuItems = [
   {
     name: 'Home',
-    href: '/',
+    href: '/home',
   },
   {
     name: 'About',
