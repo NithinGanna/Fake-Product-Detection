@@ -7,7 +7,7 @@ import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react'
 const menuItems = [
   {
     name: 'Home',
-    href: '/home',
+    href: '/',
   },
   {
     name: 'About',
@@ -96,7 +96,7 @@ export function PreNavBar() {
                         />
                       </svg>
                     </span>
-                    <span className="font-bold">DevUI</span>
+                    <span className="font-bold">Hackathon</span>
                   </div>
                   <div className="-mr-2">
                     <button
@@ -128,17 +128,11 @@ export function PreNavBar() {
                   </nav>
                 </div>
                 <div className="mt-2 space-y-2">
-                <Link to='/register'
+                <Link to='/home'
                     type="button"
                     className="w-full rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                   >
-                    Sign In
-                  </Link>
-                  <Link to='/login'
-                    type="button"
-                    className="w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                  >
-                    Log In
+                    Get Started
                   </Link>
                 </div>
               </div>
