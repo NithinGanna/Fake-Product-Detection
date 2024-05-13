@@ -43,6 +43,23 @@ const User = mongoose.model('User', userSchema);
 
 const customerUser = mongoose.model('customerUser', userSchema);
 
+const reminderSchema = new mongoose.Schema({
+  userEmail: {
+    type: String,
+    required: true
+  },
+  expiryDate: {
+    type: Date,
+    required: true
+  },
+  reminderDate: {
+    type: Date,
+    required: true
+  }
+});
+
+const Reminder = mongoose.model('Reminder', reminderSchema);
+
 app.use(bodyParser.json());
 // Allow requests from specific origin
 const corsOptions = {
