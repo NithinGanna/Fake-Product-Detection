@@ -9,6 +9,7 @@ import RetrieveProduct from './Components/RetrieveProduct';
 import { CustomerLogin } from './CustomerComponents/CustomerLogin';
 import { CustomerRegister } from './CustomerComponents/CustomerRegister';
 import CustomerHome from './CustomerPages/CustomerHome';
+import CustomerHomepage from './CustomerPages/CustomerHomepage';
 import Analyse from './CustomerComponents/Analyse';
 import Summary from './CustomerComponents/Summary';
 import QR from './Components/QR';
@@ -31,7 +32,8 @@ function App() {
           <Route path='/retrieve-product' element={ <RetrieveProduct/>} />
           <Route path='/customer-login' element={ <CustomerLogin/>}/>
           <Route path='/customer-register' element={ <CustomerRegister/>}/>
-          <Route path='/customer-home' element={<CustomerHome/>} />
+          <Route path='/customer-home' element={<CustomerHomepage/>} />
+          <Route path='/verify' element={<CustomerHome/>} />
           <Route path='/summary' element={<Summary/>} />
           <Route path='/analyse' element={ <Analyse/> } />
           <Route path='/qr' element={<QR/>} />

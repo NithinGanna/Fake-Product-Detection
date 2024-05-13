@@ -10,7 +10,7 @@ const LandingPage = () => {
     <div>
         <PreNavBar/>
         <IntroLandingPage/>
-        <FeaturesLandingPage/>
+        
         <FAQLandingPage/>
         <FooterLandingPage/>
     </div>
