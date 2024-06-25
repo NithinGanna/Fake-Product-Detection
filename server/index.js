@@ -63,7 +63,8 @@ const Reminder = mongoose.model('Reminder', reminderSchema);
 app.use(bodyParser.json());
 // Allow requests from specific origin
 const corsOptions = {
-  origin: ['http://localhost:5173'], // Change this to your frontend URL
+  // origin: ['http://localhost:5173'], // Change this to your frontend URL
+  origin: ['https://pharmaawatch.netlify.app'], // Change this to your frontend URL
   credentials: true,
 };
 app.use(cookieParser());
